@@ -1,0 +1,35 @@
+.btn-custom-primary,
+.btn-custom-primary:disabled {
+    background-color: #FB8500; /* Replace with your desired color */
+    border-color: #FB8500; /* Replace with your desired color for the border */
+    color: #023047; /* Text color */
+    text-transform: uppercase;
+}
+
+.btn-custom-primary:hover,
+.btn-custom-primary:focus,
+.btn-custom-primary:active{
+  background-color: #E07800; /* Replace with your desired hover color */
+  border-color: #E07800; /* Replace with your desired hover color for the border */
+  color: #023047; /* Text color on hover */
+}
+
+.btn-custom-secondary,
+.btn-custom-secondary:disabled {
+    background-color: #FFB703; /* Replace with your desired color */
+    border-color: #FFB703; /* Replace with your desired color for the border */
+    color: #023047; /* Text color */
+    text-transform: lowercase;
+}
+
+.btn-custom-secondary:hover,
+.btn-custom-secondary:focus,
+.btn-custom-secondary:active{
+  background-color: #E0A100; /* Replace with your desired hover color */
+  border-color: #E0A100; /* Replace with your desired hover color for the border */
+  color: #023047; /* Text color on hover */
+}
+
+.display-1{
+    text-transform: uppercase;
+}

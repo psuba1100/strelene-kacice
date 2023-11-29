@@ -1,13 +1,18 @@
 <?php
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Perform any necessary processing before redirection
-    
-    // Redirect to another page
-    header('Location: pages/game.php');
-    exit(); // Make sure that code below is not executed when we redirect
-}
-?>
+  // Check if the form is submitted
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check which button was clicked
+    if (isset($_POST['zacatHru'])) {
+      // Redirect to Page 1
+      header('Location: pages/game.php');
+      exit();
+    } elseif (isset($_POST['prihlasenie'])) {
+      // Redirect to Page 2
+      header('Location: pages/prihlasenie.php');
+      exit();
+    }
+  }
+  ?>
 
 <!DOCTYPE html>
 <html lang="sk">
@@ -22,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="resources/css/customBootstrap.css">
     <link rel="shortcut icon" href="resources/images/favicon.png" type="image/x-icon">
-    
+
     <title>Strelené kačice</title>
 </head>
 
@@ -39,14 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row mb-3 text-center">
             <div class="col text-center">
                 <form action="" method="post">
-                    <button class="btn btn-custom-primary btn-lg" type="submit">začať hru</button>
+                    <button name="zacatHru" class="btn btn-custom-primary btn-lg" type="submit">začať hru</button>
                 </form>
             </div>
         </div>
         <div class="row mb-3 text-center">
             <div class="col text-center">
-                <form action="pages/prihlasenie.php" method="post">
-                    <button type="submit" class="btn btn-custom-secondary btn-sm">prihlásenie</button>
+                <form action="" method="post">
+                    <button name="prihlasenie" type="submit" class="btn btn-custom-secondary btn-sm">prihlásenie</button>
                 </form>
             </div>
         </div>

@@ -1,12 +1,5 @@
 <?php
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Perform any necessary processing before redirection
-    
-    // Redirect to another page
-    header('Location: ../index.php');
-    exit(); // Make sure that code below is not executed when we redirect
-}
+require_once 'prihlaseniebcd.php';
 ?>
 
 <!DOCTYPE html>
@@ -27,27 +20,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <form action="" method="post">
-        <button class="btn btn-custom-primary btn-lg back" type="submit">⇐</button>
+        <button class="btn btn-custom-primary btn-lg back" type="submit" name="back">⇐</button>
+        <div class="container-flud">
+            <div class="row mb-3">
+                <div class="col mb-3 text-center">
+                    <h3>Prihlásenie</h3>
+                </div>
+                <div class="col mb-3 text-center">
+                    <h3>Registrácia</h3>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6 text-center"><input class="form-control" type="text" name="priMeno" placeholder="meno"></div>
+                <div class="col-md-6 text-center"><input class="form-control" type="text" name="regMeno" placeholder="meno"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6 text-center"><input class="form-control" type="password" name="priHeslo" placeholder="heslo"></div>
+                <div class="col-md-6 text-center"><input class="form-control" type="password" name="regHeslo" placeholder="heslo"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6  text-center"><button class="btn btn-custom-primary" name="prihlasit">prihlásiť</button></div>
+                <div class="col-md-6  text-center"><button class="btn btn-custom-primary" name="registrovat">registrovať</button></div>
+            </div>
+            <div class="row">
+            <?php
+                if (isset($errmsg)) {
+                    echo $errmsg;
+                }
+                if (isset($oznamenie)) {
+                    echo $oznamenie;
+                }
+            ?>
+            </div>
+        </div>
     </form>
-    <div class="container-flud">
-        <div class="row">
-            <div class="col mb-3"><h3>Prihlásenie</h3></div>
-            <div class="col mb-3"><h3>Registrácia</h3></div>
-        </div>
-        <div class="row">
-            <div class="col mb-3"><input type="text" name="" id="" placeholder="meno"></div>
-            <div class="col mb-3"><input type="text" name="" id="" placeholder="meno"></div>
-        </div>
-        <div class="row">
-            <div class="col mb-3"><input type="password" name="" id="" placeholder="heslo"></div>
-            <div class="col mb-3"><input type="password" name="" id="" placeholder="heslo"></div>
-        </div>
-        <div class="row">
-            <div class="col"><button class="btn btn-custom-primary">prihlásiť</button></div>
-            <div class="col"><button class="btn btn-custom-primary">registrovať</button></div>
-        </div>
-    </div>
-    <form action=""></form>
 </body>
 
 </html>

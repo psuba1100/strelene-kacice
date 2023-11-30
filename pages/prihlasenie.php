@@ -29,7 +29,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="post">
         <button class="btn btn-custom-primary btn-lg back" type="submit">⇐</button>
     </form>
-    prihlasenie.php
+    <div class="container-flud">
+        <div class="row">
+            <div class="col mb-3"><h3>Prihlásenie</h3></div>
+            <div class="col mb-3"><h3>Registrácia</h3></div>
+        </div>
+        <div class="row">
+            <div class="col mb-3"><input type="text" name="" id="" placeholder="meno"></div>
+            <div class="col mb-3"><input type="text" name="" id="" placeholder="meno"></div>
+        </div>
+        <div class="row">
+            <div class="col mb-3"><input type="password" name="" id="" placeholder="heslo"></div>
+            <div class="col mb-3"><input type="password" name="" id="" placeholder="heslo"></div>
+        </div>
+        <div class="row">
+            <div class="col"><button class="btn btn-custom-primary">prihlásiť</button></div>
+            <div class="col"><button class="btn btn-custom-primary">registrovať</button></div>
+        </div>
+    </div>
+    <form action=""></form>
 </body>
 
 </html>

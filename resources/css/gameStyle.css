@@ -1,0 +1,12 @@
+#pozadie{
+    display: none;
+}
+#hra{
+    position: absolute;
+    /*transform: translate(-50%,-50%);*/
+    max-width: 100%;
+    max-height: 100%;
+    border: 3px solid rgb(0, 0, 0);
+    top: 4%;
+    left: 4%;
+}

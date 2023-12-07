@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" href="../resources/css/style.css">
     <link rel="stylesheet" href="../resources/css/customBootstrap.css">
+    <link rel="stylesheet" href="../resources/css/gameStyle.css">
     <link rel="shortcut icon" href="../resources/images/favicon.png" type="image/x-icon">
 
     <title>Hra strelené kačice</title>
@@ -27,6 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="post">
         <button class="btn btn-custom-primary btn-lg back" type="submit">⇐</button>
     </form>
-    game.php
+
+    <button class="btn btn-custom-primary btn-lg back" id="fullScreen">fs</button>
+
+    <canvas id="hra"></canvas>
+    <canvas id="karty"></canvas>
+
+    <img src="../resources/images/favicon.png" alt="" id="pozadie">
+
+    <script src="../resources/js/main.js" type="module"></script>
 </body>
 </html>

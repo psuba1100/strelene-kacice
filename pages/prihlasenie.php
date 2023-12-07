@@ -15,7 +15,7 @@ require_once 'prihlaseniebcd.php';
     <link rel="stylesheet" href="../resources/css/customBootstrap.css">
     <link rel="shortcut icon" href="../resources/images/favicon.png" type="image/x-icon">
 
-    <title>Hra strelené kačice</title>
+    <title>Strelené kačice - prihlásenie</title>
 </head>
 
 <body>

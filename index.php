@@ -1,18 +1,18 @@
 <?php
-  // Check if the form is submitted
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check which button was clicked
     if (isset($_POST['zacatHru'])) {
-      // Redirect to Page 1
-      header('Location: pages/game.php');
-      exit();
+        // Redirect to Page 1
+        header('Location: pages/game.php');
+        exit();
     } elseif (isset($_POST['prihlasenie'])) {
-      // Redirect to Page 2
-      header('Location: pages/prihlasenie.php');
-      exit();
+        // Redirect to Page 2
+        header('Location: pages/prihlasenie.php');
+        exit();
     }
-  }
-  ?>
+}
+?>
 
 <!DOCTYPE html>
 <html lang="sk">
@@ -38,8 +38,12 @@
             <h1 class="text-center display-1">strelené kačice</h1>
         </div>
         <div class="row justify-content-around mb-5">
-            <div class="col-1"><div class="rounded-circle circle mx-auto"></div></div>
-            <div class="col-1"><div class="rounded-circle circle mx-auto"></div></div>
+            <div class="col-1">
+                <div class="rounded-circle circle mx-auto"></div>
+            </div>
+            <div class="col-1">
+                <div class="rounded-circle circle mx-auto"></div>
+            </div>
         </div>
         <div class="row mb-3 text-center">
             <div class="col text-center">
@@ -56,11 +60,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type=text/javascript src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>

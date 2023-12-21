@@ -18,4 +18,6 @@ window.addEventListener("load", function(){
             this.background.draw(context)
         }
     }
+
+    
 })

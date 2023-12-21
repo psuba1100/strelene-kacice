@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <canvas id="hra"></canvas>
     <canvas id="karty"></canvas>
 
-    <img src="../resources/images/favicon.png" alt="" id="pozadie">
+    <img src="../resources/images/obrazkyKariet/kacaciPochod.png" alt="" id="kacaciPochod">
+    <img src="../resources/images/obrazkyKariet/Zamieriť.png" alt="" id="zamierit">
 
     <script src="../resources/js/main.js" type="module"></script>
 </body>

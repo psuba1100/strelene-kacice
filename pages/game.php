@@ -37,6 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <img src="../resources/images/obrazkyKariet/kacaciPochod.png" alt="" id="kacaciPochod">
     <img src="../resources/images/obrazkyKariet/Zamieriť.png" alt="" id="zamierit">
 
+    <img src="../resources/images/pozadie/trava.jpg" alt="" id="trava">
+    <img src="../resources/images/pozadie/voda.jpg" alt="" id="voda">
+
     <script src="../resources/js/main.js" type="module"></script>
 </body>
 </html>

@@ -35,10 +35,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <canvas id="karty"></canvas>
 
     <img src="../resources/images/obrazkyKariet/kacaciPochod.png" alt="" id="kacaciPochod">
+    <img src="../resources/images/obrazkyKariet/kacaciTanec.png" alt="" id="kacaciTanec">
+    <img src="../resources/images/obrazkyKariet/unik.png" alt="" id="unik">
+    <img src="../resources/images/obrazkyKariet/vystrelit.png" alt="" id="vystrelit">
+    <img src="../resources/images/obrazkyKariet/zivyStit.png" alt="" id="zivyStit">
     <img src="../resources/images/obrazkyKariet/Zamieriť.png" alt="" id="zamierit">
 
     <img src="../resources/images/pozadie/trava.jpg" alt="" id="trava">
-    <img src="../resources/images/pozadie/voda.jpg" alt="" id="voda">
+    <img src="../resources/images/pozadie/voda.jpg" alt="" id="pozadieVoda">
+
+    <img src="../resources/images/obrazkyKaciek/biela.png" alt="" id="biela">
+    <img src="../resources/images/obrazkyKaciek/modra.png" alt="" id="modra">
+    <img src="../resources/images/obrazkyKaciek/zelena.png" alt="" id="zelena">
+    <img src="../resources/images/obrazkyKaciek/voda.png" alt="" id="voda">
 
     <script src="../resources/js/main.js" type="module"></script>
 </body>

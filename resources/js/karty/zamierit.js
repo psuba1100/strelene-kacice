@@ -1,9 +1,10 @@
 import {Karta} from "../karta.js"
 
-class Zamierit extends Karta{
-    constructor(x,y){
-        this.nazovKarty = "zamierit"
-        this.obrazok = document.getElementById('zamierit')
+export class Zamierit extends Karta{
+    constructor(x, y){
+        super("zamierit", document.getElementById('zamierit'), x, y)
+        this.height = 200
+        this.width = 129
         this.x = x
         this.y = y
     }

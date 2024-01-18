@@ -1,5 +1,5 @@
-import {Pozadie} from "./pozadie.js"
-import {Hrac} from "./hrac.js"
+import { Pozadie } from "./pozadie.js"
+import { Hrac } from "./hrac.js"
 import { KacaciPochod } from "./karty/kacaciPochod.js";
 import { Rybnik } from "./rybnik.js";
 import { KacaciTanec } from "./karty/kacaciTanec.js";
@@ -13,9 +13,39 @@ import { Modra } from "./kacky/modra.js";
 import { Zelena } from "./kacky/zelena.js";
 import { Voda } from "./kacky/voda.js";
 
+/*function loadData(data) {
+    var jdata = JSON.stringify(data)
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(data);
+        }
+    };
+    xhttp.open("POST", "game.php", true);
+    xhttp.send(jdata);
+}*/
+
+/*function loadData(data) {
+    var jdata = JSON.stringify(data)
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(data);
+            console.log(response.message);
+        }
+    };
+    xhttp.open("POST", "game.php", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send(jdata);
+}*/
+
+
 let pocetHracov = 3
 
-window.addEventListener("load", function(){
+window.addEventListener("load", function () {
+
+
+
     const canvas = document.getElementById('hra')
     const ctx = canvas.getContext('2d');
 
@@ -51,14 +81,28 @@ window.addEventListener("load", function(){
 
 
             this.zaciatok()
+
+            let bruh = hraci[0].karty;
+
+            $.ajax({
+                type: "POST",
+                url: "game.php",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ variableName: bruh }),
+                success: function(response) {
+                  console.log(response); // Handle the response from PHP
+                }
+              });
+
+            //loadData(bruh)
         }
 
-        zaciatok(){
+        zaciatok() {
 
             for (let i = 0; i < this.karty.length; i++) {
                 for (let j = 0; j < 10; j++) {
                     balicek.push(this.karty[i])
-                }               
+                }
             }
 
             balicek = shuffleArray(balicek)
@@ -75,7 +119,7 @@ window.addEventListener("load", function(){
                     poleHracov.push(this.kacky[i])
                 }
             }
-            
+
             for (let j = 0; j < 3; j++) {
                 poleHracov.push(this.voda)
             }
@@ -84,7 +128,7 @@ window.addEventListener("load", function(){
 
             console.log(balicek, poleHracov, hraci)
 
-            
+
 
             for (let i = 0; i < 5; i++) {
                 this.rybnik.kacky.push(poleHracov[i])
@@ -92,11 +136,11 @@ window.addEventListener("load", function(){
             console.log(this.rybnik.kacky)
         }
 
-        draw(context){
-            this.background.draw(context)
-            hraci[0].drawK(context, canvas.height, canvas.width)
-            this.rybnik.draw(context)
-            this.rybnik.drawKacky(context)
+        draw(context) {
+            //this.background.draw(context)
+            //hraci[0].drawK(context, canvas.height, canvas.width)
+            //this.rybnik.draw(context)
+            //this.rybnik.drawKacky(context)
         }
     }
 

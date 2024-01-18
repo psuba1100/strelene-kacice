@@ -24,3 +24,7 @@ body{
     left: 25px;
     top: 25px;
 }
+
+canvas{
+    display: none;
+}

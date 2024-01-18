@@ -2,15 +2,25 @@
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Perform any necessary processing before redirection
-    
+
     // Redirect to another page
     header('Location: ../index.php');
     exit(); // Make sure that code below is not executed when we redirect
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Retrieve the variable sent from JavaScript
+  $receivedVariable = $_POST["variableName"];
+
+  // Do something with the variable
+  //echo "Received from JavaScript: " . $receivedVariable;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <title>Hra strelené kačice</title>
 </head>
+
 <body>
     <form action="" method="post">
         <button class="btn btn-custom-primary btn-lg back" type="submit">⇐</button>
@@ -33,6 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <canvas id="hra"></canvas>
     <canvas id="karty"></canvas>
+
+    <?php
+    
+    echo "<div>'.$receivedVariable.'</div>";
+
+    ?>
 
     <img src="../resources/images/obrazkyKariet/kacaciPochod.png" alt="" id="kacaciPochod">
     <img src="../resources/images/obrazkyKariet/kacaciTanec.png" alt="" id="kacaciTanec">
@@ -49,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <img src="../resources/images/obrazkyKaciek/zelena.png" alt="" id="zelena">
     <img src="../resources/images/obrazkyKaciek/voda.png" alt="" id="voda">
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
     <script src="../resources/js/main.js" type="module"></script>
 </body>
+
 </html>

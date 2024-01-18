@@ -2,15 +2,30 @@
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Perform any necessary processing before redirection
-    
+
     // Redirect to another page
     header('Location: ../index.php');
     exit(); // Make sure that code below is not executed when we redirect
+}
+
+$data = json_decode(file_get_contents('php://input'), true);
+
+if (isset($data['bruh'])) {
+    $myList = $data['bruh'];
+
+    // Process the list as needed
+    // ...
+    echo $myList;
+    // Send a response back to JavaScript
+    echo json_encode(['success' => true, 'message' => 'List received successfully']);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid data']);
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <title>Hra strelené kačice</title>
 </head>
+
 <body>
     <form action="" method="post">
         <button class="btn btn-custom-primary btn-lg back" type="submit">⇐</button>
@@ -51,4 +67,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="../resources/js/main.js" type="module"></script>
 </body>
+
 </html>

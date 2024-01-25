@@ -7,15 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ../index.php');
     exit(); // Make sure that code below is not executed when we redirect
 }
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Retrieve the variable sent from JavaScript
-  $receivedVariable = $_POST["variableName"];
-
-  // Do something with the variable
-  //echo "Received from JavaScript: " . $receivedVariable;
-}
 ?>
 
 <!DOCTYPE html>

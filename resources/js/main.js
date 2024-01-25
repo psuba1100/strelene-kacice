@@ -126,26 +126,7 @@ window.addEventListener("load", function () {
 
             poleHracov = shuffleArray(poleHracov)
 
-            let bruh = hraci[0].karty
-
-            console.log(JSON.stringify({bruh}))
-
-            fetch('game.php', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ bruh }),
-              })
-                .then(response => response.json())
-                .then(data => {
-                  console.log('PHP script response:', data);
-                })
-                .catch(error => {
-                  console.log('Error:', error);
-                });
-
-            console.log(balicek, poleHracov, hraci, bruh)
+            console.log(balicek, poleHracov, hraci)
 
 
 

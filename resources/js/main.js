@@ -13,38 +13,9 @@ import { Modra } from "./kacky/modra.js";
 import { Zelena } from "./kacky/zelena.js";
 import { Voda } from "./kacky/voda.js";
 
-/*function loadData(data) {
-    var jdata = JSON.stringify(data)
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(data);
-        }
-    };
-    xhttp.open("POST", "game.php", true);
-    xhttp.send(jdata);
-}*/
-
-/*function loadData(data) {
-    var jdata = JSON.stringify(data)
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var response = JSON.parse(data);
-            console.log(response.message);
-        }
-    };
-    xhttp.open("POST", "game.php", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send(jdata);
-}*/
-
-
 let pocetHracov = 3
 
 window.addEventListener("load", function () {
-
-
 
     const canvas = document.getElementById('hra')
     const ctx = canvas.getContext('2d');
@@ -79,22 +50,9 @@ window.addEventListener("load", function () {
             ]
             this.voda = new Voda(0, 0)
 
+            this.dataToSend = []
 
             this.zaciatok()
-
-            let bruh = hraci[0].karty;
-
-            $.ajax({
-                type: "POST",
-                url: "game.php",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ variableName: bruh }),
-                success: function(response) {
-                  console.log(response); // Handle the response from PHP
-                }
-              });
-
-            //loadData(bruh)
         }
 
         zaciatok() {
@@ -128,19 +86,38 @@ window.addEventListener("load", function () {
 
             console.log(balicek, poleHracov, hraci)
 
-
-
             for (let i = 0; i < 5; i++) {
                 this.rybnik.kacky.push(poleHracov[i])
             }
             console.log(this.rybnik.kacky)
+
+            hraci[0].karty.forEach(element => {
+                this.dataToSend.push(element.nazovKarty)
+            });
+            this.sendData(this.dataToSend)
+        }
+
+        sendData(data) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'game.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const responseData = JSON.parse(xhr.responseText);
+                    const receivedDataDisplay = document.getElementById('receivedDataDisplay');
+                    receivedDataDisplay.textContent = JSON.stringify(responseData);
+                } else {
+                    console.error('Error receiving data:', xhr.statusText);
+                }
+            };
+            const jsonData = JSON.stringify({ dataToSend: data });
+            xhr.send(jsonData);
         }
 
         draw(context) {
-            //this.background.draw(context)
-            //hraci[0].drawK(context, canvas.height, canvas.width)
-            //this.rybnik.draw(context)
-            //this.rybnik.drawKacky(context)
+            this.background.draw(context)
+            hraci[0].drawK(context, canvas.height, canvas.width)
+            this.rybnik.draw(context)
         }
     }
 

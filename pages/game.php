@@ -1,20 +1,38 @@
 <?php
-// Check if the form is submitted
+require_once '../config.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Perform any necessary processing before redirection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Redirect to another page
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+        $dataToSend = $data['dataToSend'];
+
+        header('Content-Type: application/json');
+        echo json_encode($dataToSend);
+        exit();
+    }
+
+    echo json_encode($dataToSend);
+    $sql = "INSERT INTO kartyhracov (IDHraca, Karty) VALUES (:IDHraca, :Karty)";
+    $ID_hraca = '0'; // TODO - pouzit ID hraceho z prijatych dat
+    $Karty = $data;
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":IDHraca", $ID_hraca, PDO::PARAM_STR);
+        $stmt->bindParam(":Karty", $Karty, PDO::PARAM_STR);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        $e->getMessage();
+    }
+
     header('Location: ../index.php');
-    exit(); // Make sure that code below is not executed when we redirect
-}
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Retrieve the variable sent from JavaScript
-  $receivedVariable = $_POST["variableName"];
-
-  // Do something with the variable
-  //echo "Received from JavaScript: " . $receivedVariable;
+    exit();
 }
 ?>
 
@@ -45,12 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <canvas id="hra"></canvas>
     <canvas id="karty"></canvas>
 
-    <?php
-    
-    echo "<div>'.$receivedVariable.'</div>";
-
-    ?>
-
     <img src="../resources/images/obrazkyKariet/kacaciPochod.png" alt="" id="kacaciPochod">
     <img src="../resources/images/obrazkyKariet/kacaciTanec.png" alt="" id="kacaciTanec">
     <img src="../resources/images/obrazkyKariet/unik.png" alt="" id="unik">
@@ -65,6 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <img src="../resources/images/obrazkyKaciek/modra.png" alt="" id="modra">
     <img src="../resources/images/obrazkyKaciek/zelena.png" alt="" id="zelena">
     <img src="../resources/images/obrazkyKaciek/voda.png" alt="" id="voda">
+
+    <div id="receivedDataDisplay"></div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 

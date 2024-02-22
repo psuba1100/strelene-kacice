@@ -6,30 +6,39 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
         $dataToSend = $data['dataToSend'];
-
+    
+        echo json_encode($dataToSend); // Output received data to check if it's correct
+    
+        $sql = "INSERT INTO kartyhracov (IDHraca, Karty) VALUES (:IDHraca, :Karty)";
+        $ID_hraca = '0'; // TODO - pouzit ID hraceho z prijatych dat
+        $Karty = json_decode($dataToSend[0]); // Encode the array to JSON
+        echo $Karty;
+    
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(":IDHraca", $ID_hraca, PDO::PARAM_STR);
+            $stmt->bindParam(":Karty", $Karty, PDO::PARAM_STR);
+            $stmt->execute();
+            // Output success message
+            echo "Data inserted successfully";
+        } catch (PDOException $e) {
+            // Output any errors that occur during the insertion process
+            echo $e->getMessage();
+            exit(); // Exit the script to prevent further execution
+        }
+    
         header('Content-Type: application/json');
-        echo json_encode($dataToSend);
         exit();
     }
+    
 
     echo json_encode($dataToSend);
-    $sql = "INSERT INTO kartyhracov (IDHraca, Karty) VALUES (:IDHraca, :Karty)";
-    $ID_hraca = '0'; // TODO - pouzit ID hraceho z prijatych dat
-    $Karty = $data;
-
-    try {
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(":IDHraca", $ID_hraca, PDO::PARAM_STR);
-        $stmt->bindParam(":Karty", $Karty, PDO::PARAM_STR);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        $e->getMessage();
-    }
 
     header('Location: ../index.php');
     exit();

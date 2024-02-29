@@ -6,35 +6,68 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $jsonData = file_get_contents('php://input');
-        $data = json_decode($jsonData, true);
-        $dataToSend = $data['dataToSend'];
-
-        header('Content-Type: application/json');
-        echo json_encode($dataToSend);
+    if (isset($_POST['back'])) {
+        header('Location: ../index.php');
         exit();
     }
 
-    echo json_encode($dataToSend);
-    $sql = "INSERT INTO kartyhracov (IDHraca, Karty) VALUES (:IDHraca, :Karty)";
-    $ID_hraca = '0'; // TODO - pouzit ID hraceho z prijatych dat
-    $Karty = $data;
+    $jsonData = file_get_contents('php://input');
+    $data = json_decode($jsonData, true);
+    $dataToSend = $data['dataToSend'];
 
+    echo json_encode($dataToSend);
+
+    $ID_hraca = 0;
+
+    foreach ($dataToSend as $item) {
+        $sql = "UPDATE kartyhracov SET Karty = CONCAT_WS(',', Karty, :Karty) WHERE IDHraca = :IDHraca";
+    
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(":IDHraca", $ID_hraca, PDO::PARAM_STR);
+            $stmt->bindParam(":Karty", $item, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    
+    }
+    /*$ID_hraca = 0;
+    $sql = "INSERT INTO `kartyhracov` (`IDHraca`) VALUES (:IDHraca)";
     try {
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(":IDHraca", $ID_hraca, PDO::PARAM_STR);
-        $stmt->bindParam(":Karty", $Karty, PDO::PARAM_STR);
         $stmt->execute();
     } catch (PDOException $e) {
-        $e->getMessage();
-    }
+        echo $e->getMessage();
+    }*/
 
-    header('Location: ../index.php');
+    header('Content-Type: application/json');
     exit();
 }
+
+/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    // Assuming IDHraca is 1 for now
+    $IDHraca = 1;
+    $karty = implode(',', $data['dataToSend']); // Convert array to comma-separated string
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO `kartyhracov` (`IDHraca`, `Karty`) VALUES (:IDHraca, :Karty)");
+        $stmt->bindParam(':IDHraca', $IDHraca);
+        $stmt->bindParam(':Karty', $karty);
+        $stmt->execute();
+        echo json_encode(array("status" => "success"));
+    } catch (PDOException $e) {
+        echo json_encode(array("status" => "error", "message" => $e->getMessage()));
+    }
+    exit();
+}*/
 ?>
+
 
 <!DOCTYPE html>
 <html lang="sk">
@@ -55,10 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <form action="" method="post">
-        <button class="btn btn-custom-primary btn-lg back" type="submit">⇐</button>
+        <button class="btn btn-custom-primary btn-lg back" type="submit" name="back">⇐</button>
     </form>
 
-    <button class="btn btn-custom-primary btn-lg back" id="fullScreen">fs</button>
+
 
     <canvas id="hra"></canvas>
     <canvas id="karty"></canvas>

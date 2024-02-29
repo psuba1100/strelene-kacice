@@ -12,6 +12,7 @@ import { Biela } from "./kacky/biela.js";
 import { Modra } from "./kacky/modra.js";
 import { Zelena } from "./kacky/zelena.js";
 import { Voda } from "./kacky/voda.js";
+import { InputHandler } from "./inputHandler.js";
 
 let pocetHracov = 3
 
@@ -31,6 +32,7 @@ window.addEventListener("load", function () {
         constructor(height, width) {
             this.height = height
             this.width = width
+            this.input = new InputHandler(canvas, this, ctx)
             this.background = new Pozadie(this.height, this.width)
             this.rybnik = new Rybnik(this.height, this.width)
             this.kacaciPochod = new KacaciPochod(0, 0)
@@ -111,6 +113,8 @@ window.addEventListener("load", function () {
                 }
             };
             const jsonData = JSON.stringify({ dataToSend: data });
+
+            console.log('data to send:', jsonData)
             xhr.send(jsonData);
         }
 

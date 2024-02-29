@@ -21,10 +21,6 @@ window.addEventListener("load", function () {
     const canvas = document.getElementById('hra')
     const ctx = canvas.getContext('2d');
 
-    let balicek = []
-    let poleHracov = []
-    let hraci = []
-
     canvas.height = 700
     canvas.width = 1500
 
@@ -36,6 +32,9 @@ window.addEventListener("load", function () {
             this.background = new Pozadie(this.height, this.width)
             this.rybnik = new Rybnik(this.height, this.width)
             this.kacaciPochod = new KacaciPochod(0, 0)
+            this.balicek = []
+            this.poleHracov = []
+            this.hraci = []
 
             this.karty = [
                 new KacaciTanec(0, 0),
@@ -61,39 +60,39 @@ window.addEventListener("load", function () {
 
             for (let i = 0; i < this.karty.length; i++) {
                 for (let j = 0; j < 10; j++) {
-                    balicek.push(this.karty[i])
+                    this.balicek.push(this.karty[i])
                 }
             }
 
-            balicek = shuffleArray(balicek)
+            this.balicek = shuffleArray(this.balicek)
 
             for (let index = 0; index < pocetHracov; index++) {
                 let newPlayer = new Hrac(index, 6, this.kacky[index])
-                newPlayer.karty.push(balicek[index], balicek[1 + index], balicek[2 + index])
-                balicek.splice(0, 3)
-                hraci.push(newPlayer)
+                newPlayer.karty.push(this.balicek[index], this.balicek[1 + index], this.balicek[2 + index])
+                this.balicek.splice(0, 3)
+                this.hraci.push(newPlayer)
             }
 
             for (let i = 0; i < pocetHracov; i++) {
                 for (let j = 0; j < 3; j++) {
-                    poleHracov.push(this.kacky[i])
+                    this.poleHracov.push(this.kacky[i])
                 }
             }
 
             for (let j = 0; j < 3; j++) {
-                poleHracov.push(this.voda)
+                this.poleHracov.push(this.voda)
             }
 
-            poleHracov = shuffleArray(poleHracov)
+            this.poleHracov = shuffleArray(this.poleHracov)
 
-            console.log(balicek, poleHracov, hraci)
+            console.log(this.balicek, this.poleHracov, this.hraci)
 
             for (let i = 0; i < 5; i++) {
-                this.rybnik.kacky.push(poleHracov[i])
+                this.rybnik.kacky.push(this.poleHracov[i])
             }
             console.log(this.rybnik.kacky)
 
-            hraci[0].karty.forEach(element => {
+            this.hraci[0].karty.forEach(element => {
                 this.dataToSend.push(element.nazovKarty)
             });
             this.sendData(this.dataToSend)
@@ -120,7 +119,7 @@ window.addEventListener("load", function () {
 
         draw(context) {
             this.background.draw(context)
-            hraci[0].drawK(context, canvas.height, canvas.width)
+            this.hraci[0].drawK(context, canvas.height, canvas.width)
             this.rybnik.draw(context)
         }
     }

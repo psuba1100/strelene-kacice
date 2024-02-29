@@ -12,9 +12,15 @@ export class InputHandler {
         const mouseX = event.clientX - rect.left;
         const mouseY = event.clientY - rect.top;
 
-        this.game.rybnik.kacky.forEach(karta => {
-            karta.hasBorder = this.isClickedOnKarta(mouseX, mouseY, karta);
-            console.log('clicked');
+        console.log(mouseX + ',' + mouseY);
+        this.game.hraci[0].karty.forEach(karta => {
+            console.log("/" + karta.x + "," + karta.y)
+            if (this.isClickedOnKarta(mouseX, mouseY, karta)){
+                
+                console.log('clicked');
+            }
+            //karta.hasBorder = this.isClickedOnKarta(mouseX, mouseY, karta);
+            
         });
 
         // Redraw the canvas using the stored context

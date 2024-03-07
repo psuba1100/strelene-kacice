@@ -22,11 +22,11 @@ export class Rybnik {
     context.strokeRect(this.x, this.y, this.width, this.height);
 
     for (let i = 1; i < 5; i++) {
-      const lineX = this.x + i * (this.width / 5);
-      context.beginPath();
-      context.moveTo(lineX, this.y);
-      context.lineTo(lineX, this.y + this.height);
-      context.stroke();
+      const lineX = this.x + i * (this.width / 5)
+      context.beginPath()
+      context.moveTo(lineX, this.y)
+      context.lineTo(lineX, this.y + this.height)
+      context.stroke()
     }
 
     const cardWidth = 200;

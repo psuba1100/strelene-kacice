@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
         constructor(height, width) {
             this.height = height
             this.width = width
-            this.input = new InputHandler(canvas, this, ctx)
+           this.input = new InputHandler(canvas, this, ctx)
             this.background = new Pozadie(this.height, this.width)
             this.rybnik = new Rybnik(this.height, this.width)
             this.kacaciPochod = new KacaciPochod(0, 0)
@@ -117,6 +117,31 @@ window.addEventListener("load", function () {
             xhr.send(jsonData);
         }
 
+        /*handleClick(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+            console.log('click')
+            console.log(this.hraci[0].karty)
+            for (let i = 0; i < this.hraci[0].karty.length; i++) {
+                //console.log(this.hraci[0].karty[i])
+                if (mouseX >= this.hraci[0].karty[i].x && mouseX <= this.hraci[0].karty[i].x + this.hraci[0].karty[i].width) {
+                    console.log('matchedX')
+                    console.log(mouseX, this.hraci[0].karty[i].x, this.hraci[0].karty[i].width)
+                }
+                if (mouseY >= this.hraci[0].karty[i].y && mouseY <= this.hraci[0].karty[i].y + this.hraci[0].karty[i].height) {
+                    console.log('mached y')
+                    console.log(mouseY, this.hraci[0].karty[i].y, this.hraci[0].karty[i].height)
+                }
+                if (mouseX >= this.hraci[0].karty[i].x && mouseX <= this.hraci[0].karty[i].x + this.hraci[0].karty[i].width &&
+                    mouseY >= this.hraci[0].karty[i].y && mouseY <= this.hraci[0].karty[i].y + this.hraci[0].karty[i].height) {
+                    console.log(`Clicked on card: ${this.hraci[0].karty[i]}`);
+                    break;
+                }
+                
+            }
+        }*/
+
         draw(context) {
             this.background.draw(context)
             this.hraci[0].drawK(context, canvas.height, canvas.width)
@@ -124,8 +149,10 @@ window.addEventListener("load", function () {
         }
     }
 
-
-
     const game = new Game(canvas.height, canvas.width)
     game.draw(ctx)
+
+    /*canvas.addEventListener('click', (event) => {
+        game.handleClick(event);
+    });*/
 })

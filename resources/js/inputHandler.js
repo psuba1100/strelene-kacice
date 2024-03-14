@@ -2,62 +2,56 @@ export class InputHandler {
     constructor(canvas, game, ctx) {
         this.canvas = canvas;
         this.game = game;
-        this.ctx = ctx; // Store the context
+        this.ctx = ctx;
 
-        this.scaleHeight = window.innerWidth / 1500
-        this.scaleWidth = window.innerHeight / 700
-        this.scale = 1
+        this.currentlyClickedCard = null
+        this.currentlyClickedKacka = null
 
         this.canvas.addEventListener('click', this.handleClick.bind(this));
     }
 
     handleClick(event) {
         const rect = this.canvas.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
+        const scaleX = this.canvas.width / rect.width
+        const scaleY = this.canvas.height / rect.height
+        const mouseX = (event.clientX - rect.left) * scaleX;
+        const mouseY = (event.clientY - rect.top) * scaleY;
 
-        console.log(`Pozicia mys: ['${mouseX}', '${mouseY}']`);
-
-        if (window.innerHeight < 700 && 
-            window.innerWidth < 1500) {
-            if (window.innerWidth * (7/15) >  window.innerHeight) {
-                this.scale = this.scaleHeight
-            }else{
-                this.scale = this.scaleWidth
-            }
-        }else if(window.innerHeight > 700 &&
-                window.innerWidth < 1500){
-                this.scale = this.scaleWidth
-        }else if(window.innerHeight < 700 &&
-                window.innerWidth > 1500){
-                    this.scale = this.scaleHeight
-        }else{
-            this.scale = 1 //uwu
+        if (this.currentlyClickedCard) {
+            this.currentlyClickedCard.clicked = false
         }
 
-        this.game.hraci[0].karty.forEach(karta => {
+        if (this.currentlyClickedKacka) {
+            this.currentlyClickedKacka.clicked = false
+        }
 
-            console.log(`Pozicia karty ${karta.nazovKarty}: ['${karta.x * this.scale}','${karta.y * this.scale}']`)
-
-            if (this.isClickedOnKarta(mouseX, mouseY, karta, this.scale)){
-                
-                console.log(`click ${karta.nazovKarty}`);
+        for (const player of this.game.hraci) {
+            for (const card of player.karty) {
+                if (this.isClickedOnKarta(mouseX, mouseY, card)) {
+                    card.clicked = true
+                    this.currentlyClickedCard = card
+                    break
+                }
             }
-            //karta.hasBorder = this.isClickedOnKarta(mouseX, mouseY, karta);
-            
-        });
+        }
 
-        // Redraw the canvas using the stored context
+        for (const kacka of this.game.rybnik.kacky) {
+            if (this.isClickedOnKarta(mouseX, mouseY, kacka)) {
+                kacka.clicked = true
+                this.currentlyClickedKacka = kacka
+                break
+            }
+        }
+
         this.game.draw(this.ctx);
     }
-
-    isClickedOnKarta(mouseX, mouseY, karta, scale) {
+    isClickedOnKarta(mouseX, mouseY, karta) {
 
         return (
-            mouseX >= karta.x * scale &&
-            mouseX <= ( karta.x + karta.width )* scale &&
-            mouseY >= karta.y * scale &&
-            mouseY <= ( karta.y + karta.height ) * scale
+            mouseX >= karta.x &&
+            mouseX <= karta.x + karta.width &&
+            mouseY >= karta.y &&
+            mouseY <= karta.y + karta.height
         );
     }
 }

@@ -36,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="sk">
 
@@ -60,8 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="btn btn-custom-primary btn-lg back" type="submit" name="back">⇐</button>
     </form>
 
-
-
     <canvas id="hra"></canvas>
     <canvas id="karty"></canvas>
 
@@ -72,8 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <img src="../resources/images/obrazkyKariet/zivyStit.png" alt="" id="zivyStit">
     <img src="../resources/images/obrazkyKariet/Zamieriť.png" alt="" id="zamierit">
 
-    <img src="../resources/images/pozadie/trava.jpg" alt="" id="trava">
     <img src="../resources/images/pozadie/voda.jpg" alt="" id="pozadieVoda">
+    <img src="../resources/images/pozadie/rybnik.png" alt="" id="rybnik">
+    <img src="../resources/images/pozadie/travnik.png" alt="" id="travnik">
 
     <img src="../resources/images/obrazkyKaciek/biela.png" alt="" id="biela">
     <img src="../resources/images/obrazkyKaciek/modra.png" alt="" id="modra">

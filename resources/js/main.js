@@ -7,14 +7,22 @@ import { Unik } from "./karty/unik.js";
 import { Vystrelit } from "./karty/vystrelit.js";
 import { Zamierit } from "./karty/zamierit.js";
 import { ZivyStit } from "./karty/zivyStit.js";
-import { shuffleArray } from "./funkcie.js";
 import { Biela } from "./kacky/biela.js";
 import { Modra } from "./kacky/modra.js";
 import { Zelena } from "./kacky/zelena.js";
 import { Voda } from "./kacky/voda.js";
 import { InputHandler } from "./inputHandler.js";
 
-let pocetHracov = 3
+const pocetHracov = 3
+
+function shuffleArray(array) {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+}
 
 window.addEventListener("load", function () {
 
@@ -28,7 +36,7 @@ window.addEventListener("load", function () {
         constructor(height, width) {
             this.height = height
             this.width = width
-           this.input = new InputHandler(canvas, this, ctx)
+            this.input = new InputHandler(canvas, this, ctx)
             this.background = new Pozadie(this.height, this.width)
             this.rybnik = new Rybnik(this.height, this.width)
             this.kacaciPochod = new KacaciPochod(0, 0)
@@ -43,13 +51,13 @@ window.addEventListener("load", function () {
 
         zaciatok() {
 
-            for (let j = 0; j < 10; j++) {
-                this.balicek.push(new KacaciTanec(0, 0))
-                this.balicek.push(new Unik(0, 0))
-                this.balicek.push(new Vystrelit(0, 0))
-                this.balicek.push(new Zamierit(0, 0))
-                this.balicek.push(new ZivyStit(0, 0))
-            }
+            this.balicek = Array(10).fill().map(() => [
+                new KacaciTanec(0, 0),
+                new Unik(0, 0),
+                new Vystrelit(0, 0),
+                new Zamierit(0, 0),
+                new ZivyStit(0, 0)
+            ]).flat();
 
             this.kacky = [
                 new Biela(0, 0),
@@ -57,33 +65,31 @@ window.addEventListener("load", function () {
                 new Zelena(0, 0),
             ]
 
-            for (let i = 0; i < this.pocetZivotov; i++) {
-                this.poleHracov.push(new Biela(0,0))
-                this.poleHracov.push(new Modra(0,0))
-                this.poleHracov.push(new Zelena(0,0))
-            }
+            this.poleHracov = Array(this.pocetZivotov).fill().map(() => [
+                new Biela(0, 0),
+                new Modra(0, 0),
+                new Zelena(0, 0)
+            ]).flat()
 
             for (let j = 0; j < 3; j++) {
-                this.poleHracov.push(new Voda(0,0))
+                this.poleHracov.push(new Voda(0, 0))
             }
 
             this.balicek = shuffleArray(this.balicek)
 
             for (let index = 0; index < pocetHracov; index++) {
-                let newPlayer = new Hrac(index, this.pocetZivotov, this.kacky[index])
-                newPlayer.karty.push(this.balicek[index], this.balicek[1 + index], this.balicek[2 + index])
-                this.balicek.splice(0, 3)
-                this.hraci.push(newPlayer)
+                const newPlayer = new Hrac(index, this.pocetZivotov, this.kacky[index]);
+                const kartyToAdd = this.balicek.slice(index * 3, index * 3 + 3);
+                newPlayer.karty.push(...kartyToAdd);
+                this.hraci.push(newPlayer);
             }
+            this.balicek.splice(0, pocetHracov * 3);
 
             this.poleHracov = shuffleArray(this.poleHracov)
 
             console.log(this.balicek, this.poleHracov, this.hraci)
 
-            for (let i = 0; i < 5; i++) {
-                this.rybnik.kacky.push(this.poleHracov[i])
-            }
-
+            this.rybnik.kacky.push(...this.poleHracov.slice(0, 5));
             this.hraci[0].karty.forEach(element => {
                 this.dataToSend.push(element.nazovKarty)
             });
@@ -94,7 +100,7 @@ window.addEventListener("load", function () {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'game.php', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = function () {
+            xhr.onload = () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     const responseData = JSON.parse(xhr.responseText);
                     const receivedDataDisplay = document.getElementById('receivedDataDisplay');
@@ -104,7 +110,6 @@ window.addEventListener("load", function () {
                 }
             };
             const jsonData = JSON.stringify({ dataToSend: data });
-
             console.log('data to send:', jsonData)
             xhr.send(jsonData);
         }
@@ -115,8 +120,6 @@ window.addEventListener("load", function () {
             this.rybnik.draw(context)
         }
     }
-
     const game = new Game(canvas.height, canvas.width)
     game.draw(ctx)
-
 })

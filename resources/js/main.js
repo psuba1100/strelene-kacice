@@ -12,17 +12,9 @@ import { Modra } from "./kacky/modra.js";
 import { Zelena } from "./kacky/zelena.js";
 import { Voda } from "./kacky/voda.js";
 import { InputHandler } from "./inputHandler.js";
+import { shuffleArray } from "./functions.js";
 
 const pocetHracov = 3
-
-function shuffleArray(array) {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-    return shuffledArray;
-}
 
 window.addEventListener("load", function () {
 
@@ -46,17 +38,20 @@ window.addEventListener("load", function () {
             this.pocetZivotov = 3
             this.dataToSend = []
 
+            this.zamierene = [false, false, false, false, false];
+
             this.zaciatok()
         }
 
         zaciatok() {
 
-            this.balicek = Array(10).fill().map(() => [
+            this.balicek = Array(1).fill().map(() => [
                 new KacaciTanec(0, 0),
                 new Unik(0, 0),
                 new Vystrelit(0, 0),
                 new Zamierit(0, 0),
-                new ZivyStit(0, 0)
+                //new ZivyStit(0, 0),
+                new KacaciPochod(0, 0)
             ]).flat();
 
             this.kacky = [
@@ -114,6 +109,12 @@ window.addEventListener("load", function () {
             xhr.send(jsonData);
         }
 
+        updateRybnik() {
+            for (let i = 0; i < this.rybnik.kacky.length; i++) {
+                this.rybnik.kacky[i] = this.poleHracov[i];
+            }
+        }
+
         draw(context, clicked) {
             this.background.draw(context)
             this.hraci[0].drawK(context, canvas.height, canvas.width)
@@ -122,4 +123,6 @@ window.addEventListener("load", function () {
     }
     const game = new Game(canvas.height, canvas.width)
     game.draw(ctx)
+
+    canvas.style.display = "block";
 })

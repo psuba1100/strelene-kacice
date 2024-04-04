@@ -77,7 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <img src="../resources/images/obrazkyKaciek/zelena.png" alt="" id="zelena">
     <img src="../resources/images/obrazkyKaciek/voda.png" alt="" id="voda">
 
-    <div id="receivedDataDisplay"></div>
+    <img src="../resources/images/terc.png" alt="" id="terc">
+
+    <div id="receivedDataDisplay" class="devData"></div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 

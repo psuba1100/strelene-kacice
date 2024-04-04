@@ -8,7 +8,6 @@ export class Rybnik {
     this.borderColor = 'black';
     this.borderWidth = 5;
     this.fillColor = 'lightblue';
-    this.zamierene = [];
   }
 
   draw(context) {

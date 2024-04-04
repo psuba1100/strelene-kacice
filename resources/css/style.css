@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
+.devData{
+    display: none;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -25,6 +29,6 @@ body{
     top: 25px;
 }
 
-/*canvas{
+canvas{
     display: none;
 }

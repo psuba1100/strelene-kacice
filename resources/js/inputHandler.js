@@ -1,3 +1,6 @@
+import { kacaciPochod, shuffleArray, unik, updateRybnik, vystrelit } from "./functions.js";
+import { Voda } from "./kacky/voda.js";
+
 export class InputHandler {
     constructor(canvas, game, ctx) {
         this.canvas = canvas;
@@ -23,7 +26,6 @@ export class InputHandler {
         for (const player of this.game.hraci) {
             for (const card of player.karty) {
                 if (this.isClickedOnKarta(mouseX, mouseY, card)) {
-                    console.log('clicked on karta')
                     if (this.currentlyClickedCard) {
                         this.currentlyClickedCard.clicked = false
                     }
@@ -35,11 +37,42 @@ export class InputHandler {
             }
         }
 
-        for (const kacka of this.game.rybnik.kacky) {
+        for (let i = 0; i < this.game.rybnik.kacky.length; i++) {
+            let kacka = this.game.rybnik.kacky[i];
+
             if (this.isClickedOnKarta(mouseX, mouseY, kacka)) {
-                console.log('clicked on kacka')
                 if (this.currentlyClickedKacka) {
                     this.currentlyClickedKacka.clicked = false
+                }
+
+                if (this.currentlyClickedCard) {
+
+                    switch (this.currentlyClickedCard.nazovKarty) {
+                        case "zamierit":
+                            this.game.zamierene[i] = true;
+                            break;
+                        case "kacaciPochod":
+                            this.game.poleHracov = kacaciPochod(this.game.poleHracov)
+                            this.game.updateRybnik()
+                            break;
+                        case "unik":
+                            this.game.poleHracov = unik(this.game.poleHracov, i)
+                            this.game.updateRybnik()
+                            break;
+                        case "kacaciTanec":
+                            this.game.poleHracov = shuffleArray(this.game.poleHracov);
+                            this.game.updateRybnik();
+                            break;
+                        case "vystrelit":
+                            if (kacka.zamierene) {
+                                this.game.zamierene[i] = false
+                                this.game.poleHracov = vystrelit(this.game.poleHracov, i, new Voda(0, 0))
+                                this.game.updateRybnik()
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 kacka.clicked = true
                 this.currentlyClickedKacka = kacka
@@ -48,9 +81,24 @@ export class InputHandler {
             }
         }
 
+        for (let i = 0; i < this.game.poleHracov.length; i++) {
+            let kacka = this.game.poleHracov[i];
+
+            if (this.game.zamierene[i]) {
+                kacka.zamierene = true
+            }
+            else {
+                kacka.zamierene = false
+            }
+        }
+
         if (this.currentClick == false) {
-            this.currentlyClickedKacka.clicked = false
-            this.currentlyClickedCard.clicked = false
+            if (this.currentlyClickedCard) {
+                this.currentlyClickedCard.clicked = false
+            }
+            if (this.currentlyClickedKacka) {
+                this.currentlyClickedKacka.clicked = false
+            }
         }
 
         this.game.draw(this.ctx);

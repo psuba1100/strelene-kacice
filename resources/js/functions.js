@@ -1,5 +1,3 @@
-import { Voda } from "./kacky/voda.js";
-
 export function kacaciPochod(array) {
     if (array.length > 1) {
         const firstElement = array.shift();
@@ -32,24 +30,6 @@ export function zivyStit(array, position1, position2) {
     return array;
 }
 
-export function vystrelit(array, index, newValue) {
-    if (index < 0 || index >= array.length) {
-        console.error("Index is out of bounds");
-        return array; // Return the original array
-    }
-    const newArray = [...array];
-    newArray[index] = newValue;
-    
-    return newArray;
-}
-
-export function updateRybnik(poleHracov, rybnik){
-    for (let i = 0; i < rybnik.length; i++) {
-        rybnik[i] = poleHracov[i]
-    }
-    return rybnik
-}
-
 export function shuffleArray(array) {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -57,4 +37,14 @@ export function shuffleArray(array) {
         [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
     }
     return shuffledArray;
+}
+
+export function getRandomPositionExceptCurrent(excludedNumber) {
+    let min = 0
+    let max = 4
+    let randomNumber;
+    do {
+        randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (randomNumber === excludedNumber);
+    return randomNumber;
 }

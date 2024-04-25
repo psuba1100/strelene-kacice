@@ -40,17 +40,19 @@ window.addEventListener("load", function () {
 
             this.zamierene = [false, false, false, false, false];
 
+            this.aktualnyHrac = 0
+
             this.zaciatok()
         }
 
         zaciatok() {
 
-            this.balicek = Array(1).fill().map(() => [
+            this.balicek = Array(10).fill().map(() => [
                 new KacaciTanec(0, 0),
                 new Unik(0, 0),
                 new Vystrelit(0, 0),
                 new Zamierit(0, 0),
-                //new ZivyStit(0, 0),
+                new ZivyStit(0, 0),
                 new KacaciPochod(0, 0)
             ]).flat();
 
@@ -66,7 +68,7 @@ window.addEventListener("load", function () {
                 new Zelena(0, 0)
             ]).flat()
 
-            for (let j = 0; j < 3; j++) {
+            for (let j = 0; j < 5; j++) {
                 this.poleHracov.push(new Voda(0, 0))
             }
 
@@ -85,7 +87,7 @@ window.addEventListener("load", function () {
             console.log(this.balicek, this.poleHracov, this.hraci)
 
             this.rybnik.kacky.push(...this.poleHracov.slice(0, 5));
-            this.hraci[0].karty.forEach(element => {
+            this.hraci[this.aktualnyHrac].karty.forEach(element => {
                 this.dataToSend.push(element.nazovKarty)
             });
             this.sendData(this.dataToSend)
@@ -115,9 +117,22 @@ window.addEventListener("load", function () {
             }
         }
 
-        draw(context, clicked) {
+        updateKarty(karta, hrac){
+            this.hraci[hrac].karty[karta].clicked = false
+            this.balicek.push(this.hraci[hrac].karty.splice(karta, 1)[0]);
+            this.hraci[hrac].karty.push(this.balicek.splice(0, 1)[0])
+            console.log(this.balicek)
+            if(hrac + 1 == pocetHracov){
+                this.aktualnyHrac = 0
+            }else{
+                ++this.aktualnyHrac
+            }
+            console.log(this.hraci[hrac].karty)
+        }
+
+        draw(context) {
             this.background.draw(context)
-            this.hraci[0].drawK(context, canvas.height, canvas.width)
+            this.hraci[this.aktualnyHrac].drawK(context, canvas.height, canvas.width)
             this.rybnik.draw(context)
         }
     }
@@ -126,3 +141,7 @@ window.addEventListener("load", function () {
 
     canvas.style.display = "block";
 })
+
+
+
+

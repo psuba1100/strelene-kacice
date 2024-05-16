@@ -7,6 +7,8 @@ export class Biela extends Kacka{
         this.width = 200
         this.x = x
         this.y = y
+
+        this.indexHraca = 0
     }
     
 }

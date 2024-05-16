@@ -75,6 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <img src="../resources/images/obrazkyKaciek/biela.png" alt="" id="biela">
     <img src="../resources/images/obrazkyKaciek/modra.png" alt="" id="modra">
     <img src="../resources/images/obrazkyKaciek/zelena.png" alt="" id="zelena">
+    <img src="../resources/images/obrazkyKaciek/cervena.png" alt="" id="cervena">
+    <img src="../resources/images/obrazkyKaciek/oranzova.png" alt="" id="oranzova">
+    <img src="../resources/images/obrazkyKaciek/ruzova.png" alt="" id="ruzova">
     <img src="../resources/images/obrazkyKaciek/voda.png" alt="" id="voda">
 
     <img src="../resources/images/terc.png" alt="" id="terc">

@@ -1,4 +1,4 @@
-import { getRandomPositionExceptCurrent, kacaciPochod, shuffleArray, unik,  zivyStit } from "./functions.js";
+import { getRandomPositionExceptCurrent, kacaciPochod, shuffleArray, unik, zivyStit } from "./functions.js";
 
 export class InputHandler {
     constructor(canvas, game, ctx) {
@@ -21,23 +21,20 @@ export class InputHandler {
         const mouseX = (event.clientX - rect.left) * scaleX;
         const mouseY = (event.clientY - rect.top) * scaleY;
 
-        console.log(`[${mouseX}, ${mouseY}]`)
-
         this.currentClick = false
 
-        for (const player of this.game.hraci) {
-            for (const card of player.karty) {
-                if (this.isClickedOnKarta(mouseX, mouseY, card)) {
-                    if (this.currentlyClickedCard) {
-                        this.currentlyClickedCard.clicked = false
-                    }
-                    card.clicked = true
-                    this.currentlyClickedCard = card
-                    this.currentlyClickedCardIndex = player.karty.indexOf(card)
-                    this.currentClick = true
-                    console.log(player.karty, player)
-                    break
+        let player = this.game.hraci[this.game.aktualnyHrac]
+        for (const card of player.karty) {
+            if (this.isClickedOnKarta(mouseX, mouseY, card)) {
+                if (this.currentlyClickedCard) {
+                    this.currentlyClickedCard.clicked = false
                 }
+                card.clicked = true
+                this.currentlyClickedCard = card
+                this.currentlyClickedCardIndex = player.karty.indexOf(card)
+                this.currentClick = true
+                console.log(player.karty, player)
+                break
             }
         }
 
@@ -51,47 +48,64 @@ export class InputHandler {
                 }
 
                 if (this.currentlyClickedCard) {
-
                     switch (this.currentlyClickedCard.nazovKarty) {
                         case "zamierit":
                             this.game.zamierene[i] = true;
-                            if(this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
-                            this.game.updateKarty(this.currentlyClickedCardIndex, this.game.aktualnyHrac);
+                            if(this.currentlyClickedKacka)this.currentlyClickedKacka.clicked = false
+                            this.game.updateKarty(this.currentlyClickedCardIndex);
+
+                            
+                            this.clearCurrent()
                             break;
                         case "kacaciPochod":
                             this.game.poleHracov = kacaciPochod(this.game.poleHracov)
                             this.game.updateRybnik()
-                            if(this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
-                            this.game.updateKarty(this.currentlyClickedCardIndex, this.game.aktualnyHrac);
+                            if(this.currentlyClickedKacka)this.currentlyClickedKacka.clicked = false
+                            this.game.updateKarty(this.currentlyClickedCardIndex);
+
+                            
+                            this.clearCurrent()
                             break;
                         case "unik":
                             this.game.poleHracov = unik(this.game.poleHracov, i)
                             this.game.updateRybnik()
-                            if(this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
-                            this.game.updateKarty(this.currentlyClickedCardIndex, this.game.aktualnyHrac);
+                            if(this.currentlyClickedKacka)this.currentlyClickedKacka.clicked = false
+                            this.game.updateKarty(this.currentlyClickedCardIndex);
+
+                            
+                            this.clearCurrent()
                             break;
                         case "kacaciTanec":
                             this.game.poleHracov = shuffleArray(this.game.poleHracov);
                             this.game.updateRybnik();
-                            if(this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
-                            this.game.updateKarty(this.currentlyClickedCardIndex, this.game.aktualnyHrac);
+                            if(this.currentlyClickedKacka)this.currentlyClickedKacka.clicked = false
+                            this.game.updateKarty(this.currentlyClickedCardIndex);
+
+                            
+                            this.clearCurrent()
                             break;
                         case "zivyStit":
                             this.game.poleHracov = zivyStit(this.game.poleHracov, i, getRandomPositionExceptCurrent(i))
                             this.game.updateRybnik()
-                            if(this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
-                            this.game.updateKarty(this.currentlyClickedCardIndex, this.game.aktualnyHrac);
-                        break;
+                            if(this.currentlyClickedKacka)this.currentlyClickedKacka.clicked = false
+                            this.game.updateKarty(this.currentlyClickedCardIndex);
+                            this.clearCurrent()
+                            break;
                         case "vystrelit":
                             if (kacka.zamierene) {
                                 this.game.zamierene[i] = false
-                                if(this.game.rybnik.kacky[i].farba != "voda"){
-                                    if(this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
-                                    this.game.poleHracov.splice(i , 1)
+                                if (this.game.rybnik.kacky[i].farba != "voda") {
+                                    console.log(this.currentlyClickedKacka)
+                                    console.log(this.game.hraci[this.currentlyClickedKacka.indexHraca])
+                                    this.game.hraci[this.currentlyClickedKacka.indexHraca].pocetKacic--
+                                    console.log(this.game.hraci)
+                                    this.game.poleHracov.splice(i, 1)
                                     this.game.updateRybnik()
-                                    this.game.updateKarty(this.currentlyClickedCardIndex, this.game.aktualnyHrac);
+                                    if(this.currentlyClickedKacka)this.currentlyClickedKacka.clicked = false
+                                    this.game.updateKarty(this.currentlyClickedCardIndex);
                                 }
                             }
+                            this.clearCurrent()
                             break;
                         default:
                             break;
@@ -134,5 +148,11 @@ export class InputHandler {
             mouseY >= karta.y &&
             mouseY <= karta.y + karta.height
         );
+    }
+    clearCurrent() {
+        if (this.currentlyClickedKacka) this.currentlyClickedKacka.clicked = false
+        if (this.currentlyClickedCard) this.currentlyClickedCard.clicked = false
+        this.currentlyClickedCard = null
+        this.currentlyClickedCard = null
     }
 }

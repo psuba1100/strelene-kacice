@@ -13,6 +13,9 @@ import { Zelena } from "./kacky/zelena.js";
 import { Voda } from "./kacky/voda.js";
 import { InputHandler } from "./inputHandler.js";
 import { shuffleArray } from "./functions.js";
+import { Cervena } from "./kacky/cervena.js";
+import { Oranzova } from "./kacky/oranzova.js";
+import { Ruzova } from "./kacky/ruzova.js";
 
 const pocetHracov = 3
 
@@ -60,14 +63,26 @@ window.addEventListener("load", function () {
                 new Biela(0, 0),
                 new Modra(0, 0),
                 new Zelena(0, 0),
+                new Cervena(0, 0),
+                new Oranzova(0, 0),
+                new Ruzova(0, 0),
             ]
 
-            this.poleHracov = Array(this.pocetZivotov).fill().map(() => [
+            this.kacky.splice(pocetHracov, 6 - pocetHracov)
+            console.log(this.kacky)
+
+            this.poleHracov = Array(this.pocetZivotov).fill().map(() => 
+            [
                 new Biela(0, 0),
                 new Modra(0, 0),
-                new Zelena(0, 0)
-            ]).flat()
+                new Zelena(0, 0),
+                new Cervena(0, 0),
+                new Oranzova(0, 0),
+                new Ruzova(0, 0),
+            ].splice(0, pocetHracov)).flat()
 
+
+            console.log(this.poleHracov)
             for (let j = 0; j < 5; j++) {
                 this.poleHracov.push(new Voda(0, 0))
             }
@@ -117,17 +132,32 @@ window.addEventListener("load", function () {
             }
         }
 
-        updateKarty(karta, hrac){
-            this.hraci[hrac].karty[karta].clicked = false
-            this.balicek.push(this.hraci[hrac].karty.splice(karta, 1)[0]);
-            this.hraci[hrac].karty.push(this.balicek.splice(0, 1)[0])
-            console.log(this.balicek)
-            if(hrac + 1 == pocetHracov){
+        updateKarty(karta){
+            //this.hraci[this.aktualnyHrac].karty[karta].clicked = false;
+
+            for (let i = 0; i < this.poleHracov.length; i++) {
+                
+                try {
+                    this.poleHracov[i].clicked = false
+                } catch (error) {
+                    console.log("chYba")
+                }
+                
+            }
+
+            let kartaNaZmazanie = this.hraci[this.aktualnyHrac].karty.splice(karta, 1)[0]
+            kartaNaZmazanie.x = 0;kartaNaZmazanie.y = 0
+            console.log(kartaNaZmazanie)
+            this.balicek.push(kartaNaZmazanie);
+            this.hraci[this.aktualnyHrac].karty.push(this.balicek.splice(0, 1)[0])
+            if(this.aktualnyHrac + 1 == pocetHracov){
                 this.aktualnyHrac = 0
             }else{
                 ++this.aktualnyHrac
             }
-            console.log(this.hraci[hrac].karty)
+            this.hraci[this.aktualnyHrac].drawK(ctx, canvas.height, canvas.width)
+            console.log(this.hraci[this.aktualnyHrac].karty)
+            console.log(this.aktualnyHrac)
         }
 
         draw(context) {
@@ -141,7 +171,3 @@ window.addEventListener("load", function () {
 
     canvas.style.display = "block";
 })
-
-
-
-
